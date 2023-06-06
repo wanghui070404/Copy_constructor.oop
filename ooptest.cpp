@@ -1,175 +1,76 @@
 #include <conio.h>
 #include <iostream>
-#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
 using namespace std;
-
-class A
+class TS
 {
 private:
-    int a;
-    char *str;
+    char ht[25];
+    int sobd;
+    float td;
 
 public:
-    A()
+    void nhap()
     {
-        a = 0;
-        str = nullptr;
-    }
-    A(A &h)
-    {
-        this->a = h.a;
-        this->str = strdup(h.str);
-    }
-    void Nhap()
-    {
-        cout << "\nNhap so nguyen lop A: ";
-        cin >> a;
-        if (str != nullptr)
-            delete str;
-        cout << "\nNhap chuoi lop A: ";
-        char tg[30];
+        cout << "\nHo ten: ";
         fflush(stdin);
-        gets(tg);
-        str = strdup(tg);
+        gets(ht);
+        cout << "So bao danh: ";
+        cin >> sobd;
+        cout << "\nTong diem: ";
+        cin >> td;
     }
-    void Xuat()
+    virtual void in()
     {
-        cout << "\n"
-             << "So nguyen lop A = " << a;
-        cout << " Chuoi lop A: " << str;
+        cout << "\nHo ten: " << ht;
+        cout << "\n So bao danh: " << sobd;
+        cout << "\n Tong diem: " << td;
+    }
+    void xem_in()
+    {
+        int ch;
+        cout << "\nHo ten: " << ht;
+        cout << "\n Co in khong? - C/K";
+        ch = toupper(getch());
+        if (ch == 'C')
+            in();
     }
 };
 
-class B
+class TS2 : public TS
 {
 private:
-    int b;
-    char *str;
+    char dc[30];
 
 public:
-    B()
+    void nhap()
     {
-        b = 0;
-        str = nullptr;
-    }
-    B(B &h)
-    {
-        this->b = h.b;
-        this->str = strdup(h.str);
-    }
-    void Nhap()
-    {
-        cout << "\nNhap so nguyen lop B: ";
-        cin >> b;
-        if (str != nullptr)
-            delete str;
-        cout << "\nNhap chuoi lop B: ";
-        char tg[30];
+        TS::nhap();
+        cout << "Dia chi: ";
         fflush(stdin);
-        gets(tg);
-        str = strdup(tg);
+        gets(dc);
     }
-    void Xuat()
+    void in()
     {
-        cout << "\n"
-             << "So nguyen lop B: " << b;
-        cout << " Chuoi lop B: " << str;
+        TS::in();
+        cout << "\nDia chi: " << dc;
     }
 };
-
-class C : public B
-{
-private:
-    int c;
-    char *str;
-
-public:
-    C() : B()
-    {
-        c = 0;
-        str = nullptr;
-    }
-    C(C &h) : B(h)
-    {
-        this->c = h.c;
-        this->str = strdup(h.str);
-    }
-    void Nhap()
-    {
-        B::Nhap();
-        cout << "\nNhap so nguyen lop C: ";
-        cin >> c;
-        if (str != nullptr)
-            delete str;
-        cout << "\nNhap chuoi lop C: ";
-        char tg[30];
-        fflush(stdin);
-        gets(tg);
-        str = strdup(tg);
-    }
-    void Xuat()
-    {
-        B::Xuat();
-        cout << "\n"
-             << "So nguyen lop C = " << c;
-        cout << " Chuoi lop C: " << str;
-    }
-};
-
-class D : public C
-{
-private:
-    int d;
-    char *str;
-    A u;
-
-public:
-    D() : C(), u()
-    {
-        d = 0;
-        str = nullptr;
-    }
-
-    D(D &h) : C(h), u(h.u)
-    {
-        this->d = h.d;
-        this->str = strdup(h.str);
-    }
-    void Nhap()
-    {
-        u.Nhap();
-        C::Nhap();
-        cout << "\nNhap so nguyen lop D: ";
-        cin >> d;
-        if (str != nullptr)
-            delete str;
-        cout << "\nNhap chuoi lop D: ";
-        char tg[30];
-        fflush(stdin);
-        gets(tg);
-        str = strdup(tg);
-    }
-    void Xuat()
-    {
-        u.Xuat();
-        C::Xuat();
-        cout << "\n"
-             << "So nguyen lop D: " << d;
-        cout << " Chuoi lop D: " << str;
-    }
-};
-
 int main()
 {
-    D h1;
-    h1.Nhap();
-    D h2(h1);
-    cout << "\n\nH2: ";
-    h2.Xuat();
-    h1.Nhap();
-    cout << "\n\nH2: ";
-    h2.Xuat();
-    cout << "\n\nH1: ";
-    h1.Xuat();
+    TS2 t[100];
+    int i, n;
+    cout << "So thi sinh: ";
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        t[i].nhap();
+    }
+    for (int i = 0; i < n; i++)
+    {
+        t[i].xem_in();
+        cout << '\n';
+    }
     return 0;
 }
